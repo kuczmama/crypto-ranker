@@ -6,6 +6,8 @@ This project will attempt to rate github projects by an unbiased set of criteria
 - Number of contributors - more is better
 - Recency of last commit - more recent is better
 - Number of issues - More is better, because that means there is active development
+- Number of github stars
+- Number of forks
 - Ratio of open issues to closed issues - The ratio should be smaller
 - Language used, bonus points for esoteric languages, minus points for smart contract languages like solidity.
 
