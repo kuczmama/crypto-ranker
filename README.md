@@ -5,6 +5,7 @@ This project will attempt to rate github projects by an unbiased set of criteria
 - Number of commits - more is better
 - Number of contributors - more is better
 - Recency of last commit - more recent is better
+- Frequency of commits - More frequent is better, but the most recent commits are ranked higher than the older commits.
 - Number of issues - More is better, because that means there is active development
 - Number of github stars
 - Number of forks
