@@ -38,3 +38,40 @@ This diagram shows what the MVP's architecture will look like once it is all com
 - **Web API** - A web API will allow users to query data from the database, and run custom queries
 - **Data Bundling Service** - This will query the ranking data DB, and it will bundle it into meaningful data to the user, and store that data in a CDN for quick retrieval
 - **Web Client** - The frontend of the website, this will be what the user sees, it will contain all of the ranking information
+
+## Installation
+
+This project runs on rails, postgresql, webpacker, and angular JS.
+
+### Prerequisites
+
+Install Ruby 3.0.3:
+
+[Ruby](https://github.com/rbenv/rbenv)
+
+#### Install Postgresql
+
+Postgres: [https://www.postgresql.org/](https://www.postgresql.org/)
+
+```txt
+brew install postgresql`
+```
+
+Install rails
+
+```txt
+gem install rails
+```
+
+### Install and Run
+
+```txt
+git clone https://github.com/kuczmama/crypto-ranker
+cd crypto-ranker/crypto-ranker
+bundle install
+
+rails db:create
+rails db:migrate
+
+rails s
+```
