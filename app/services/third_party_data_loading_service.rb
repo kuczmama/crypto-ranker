@@ -1,0 +1,2 @@
+class ThirdPartyDataLoadingService
+end
