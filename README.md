@@ -39,39 +39,31 @@ This diagram shows what the MVP's architecture will look like once it is all com
 - **Data Bundling Service** - This will query the ranking data DB, and it will bundle it into meaningful data to the user, and store that data in a CDN for quick retrieval
 - **Web Client** - The frontend of the website, this will be what the user sees, it will contain all of the ranking information
 
-## Installation
+## API
 
-This project runs on rails, postgresql, webpacker, and angular JS.
-
-### Prerequisites
-
-Install Ruby 3.0.3:
-
-[Ruby](https://github.com/rbenv/rbenv)
-
-#### Install Postgresql
-
-Postgres: [https://www.postgresql.org/](https://www.postgresql.org/)
+### Rankings
 
 ```txt
-brew install postgresql`
+GET /api/v1/projects
+
+[{
+    url: "https://github.com/solana-labs/solana",
+    language: 'Rust',
+    open_issues: 717,
+    stars: 5956,
+    commits: 16788,
+    contributors: 228,
+    most_recent_commit: 2021-12-06T23:34:10Z,
+    days_since_last_commit: 0
+}]
 ```
 
-Install rails
-
-```txt
-gem install rails
-```
-
-### Install and Run
+## Install
 
 ```txt
 git clone https://github.com/kuczmama/crypto-ranker
-cd crypto-ranker/crypto-ranker
+cd crypto-ranker
+
 bundle install
-
-rails db:create
-rails db:migrate
-
-rails s
+ruby app/server.rb
 ```
