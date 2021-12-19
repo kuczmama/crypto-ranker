@@ -6,7 +6,7 @@ require 'date'
 
 class LoadCoinMarketcapData
     class << self
-        @@base_url = "https://pro-api.coinmarketcap.com/v1" #cryptocurrency/map?CMC_PRO_API_KEY=0b4c914d-7e3c-4ba7-a86b-277782859ce1
+        @@base_url = "https://pro-api.coinmarketcap.com/v1"
         @@api_key = ENV['CMC_PRO_API_KEY']
 
         # /v1/cryptocurrency/map - Load list of cryptocurrencies

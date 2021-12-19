@@ -1,6 +1,20 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    activemodel (7.0.0)
+      activesupport (= 7.0.0)
+    activerecord (7.0.0)
+      activemodel (= 7.0.0)
+      activesupport (= 7.0.0)
+    activesupport (7.0.0)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      tzinfo (~> 2.0)
+    concurrent-ruby (1.1.9)
+    i18n (1.8.11)
+      concurrent-ruby (~> 1.0)
+    minitest (5.15.0)
     multi_json (1.15.0)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
@@ -20,11 +34,14 @@ GEM
       sinatra (= 2.1.0)
       tilt (~> 2.0)
     tilt (2.0.10)
+    tzinfo (2.0.4)
+      concurrent-ruby (~> 1.0)
 
 PLATFORMS
   x86_64-darwin-19
 
 DEPENDENCIES
+  activerecord (~> 7.0)
   sinatra (~> 2.1)
   sinatra-contrib (~> 2.1)
 

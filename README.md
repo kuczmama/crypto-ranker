@@ -44,8 +44,16 @@ This diagram shows what the MVP's architecture will look like once it is all com
 ### Rankings
 
 ```txt
-GET /api/v1/projects
+GET /api/v1/coins
 
+[{
+    [{"id":1,"coin_marketcap_id":1,"name":"bitcoin","symbol":"BTC","slug":"bitcoin","rank":1},
+    {"id":2,"coin_marketcap_id":1,"name":"Bitcoin","symbol":"BTC","slug":"bitcoin","rank":0},
+    {"id":3,"coin_marketcap_id":2,"name":"Litecoin","symbol":"LTC","slug":"litecoin","rank":0},
+    ...
+}]
+
+GET /api/v1/projects
 [{
     url: "https://github.com/solana-labs/solana",
     language: 'Rust',
@@ -66,4 +74,7 @@ cd crypto-ranker
 
 bundle install
 ruby app/server.rb
+
+rake db:create
+rake db:migrate
 ```
