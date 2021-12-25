@@ -7,7 +7,7 @@ require_relative 'db'
 
 BASE = "/api/v1"
 get "#{BASE}/coins" do
-  Db::coins.all.to_json
+  Db::coins.limit(10).to_json
   # [{
   #   url: "https://github.com/solana-labs/solana",
   #   language: 'Rust',

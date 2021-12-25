@@ -75,3 +75,7 @@ end
 DataProcessingService.process("hello", 1) do
     puts "Hello"
 end
+
+DataProcessingService.process("yo", 1) do
+    puts "yo"
+end

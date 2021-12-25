@@ -11,8 +11,7 @@ class ThirdPartyDataLoadingService
                     coin_marketcap_id: coin['id'].to_i,
                     name: coin['name'],
                     symbol: coin['symbol'],
-                    slug: coin['slug'],
-                    rank: 0})
+                    slug: coin['slug']})
             end
         end
 
@@ -23,11 +22,11 @@ class ThirdPartyDataLoadingService
                     coin_marketcap_id: coin['id'].to_i,
                     name: coin['name'],
                     symbol: coin['symbol'],
-                    slug: coin['slug'],
-                    rank: 0})
+                    slug: coin['slug']})
             end
         end
     end
 end
+
 
 ThirdPartyDataLoadingService.load_coin_marketcap_data_from_file
