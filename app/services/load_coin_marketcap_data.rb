@@ -3,6 +3,7 @@
 require 'net/http'
 require 'json'
 require 'date'
+require '../db'
 
 class LoadCoinMarketcapData
     class << self
@@ -21,6 +22,13 @@ class LoadCoinMarketcapData
             request(url)
         end
 
+        ## Load all metadata... you can load upto max 100 ids at a time
+        def load_all_metadata
+            Db::coins.all.pluck(:coin_marketcap_id).each_slice(100) do |ids|
+                metadata(ids)
+            end
+        end
+
         private
         def request(url)
             uri = URI.parse("#{@@base_url}#{url}")
@@ -30,5 +38,6 @@ class LoadCoinMarketcapData
     end
 end
 
-puts LoadCoinMarketcapData.all_cryptocurrencies
-puts LoadCoinMarketcapData.metadata([15682])
+# puts LoadCoinMarketcapData.all_cryptocurrencies
+
+puts LoadCoinMarketcapData.metadata(coin_marketcap_ids.first)

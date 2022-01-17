@@ -6,6 +6,7 @@ class CreateCoins < ActiveRecord::Migration[7.0]
       t.string :symbol, null: false, index: {unique: true}
       t.string :slug, null: false, index: {unique: true}
       t.integer :rank, null: false, default: 0
+      t.string :github_repo_url, null: false, default: ''
     end
   end
 end
