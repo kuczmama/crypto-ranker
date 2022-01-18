@@ -15,6 +15,15 @@ class ThirdPartyDataLoadingService
             end
         end
 
+        def load_coin_marketcap_metadata_from_file
+            raw_file = File.read('../../data/coin-marketcap-metadata.json')
+            JSON.parse(raw_file)["data"].each do |coin_marketcap_id, coin|
+                source_code = coin['urls']['source_code'].nil? ? '' : coin['urls']['source_code'].first
+                next if source_code.nil?
+                Db::coins.where(coin_marketcap_id: coin_marketcap_id).update(source_code_url: source_code)
+            end
+        end
+
         def load_coin_marketcap_data_from_api
             data = LoadCoinMarketcapData.load_coin_marketcap_data
             data.each do |coin|
@@ -30,3 +39,4 @@ end
 
 
 ThirdPartyDataLoadingService.load_coin_marketcap_data_from_file
+ThirdPartyDataLoadingService.load_coin_marketcap_metadata_from_file

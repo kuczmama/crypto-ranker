@@ -24,8 +24,12 @@ class LoadCoinMarketcapData
 
         ## Load all metadata... you can load upto max 100 ids at a time
         def load_all_metadata
+            idx = 0
             Db::coins.all.pluck(:coin_marketcap_id).each_slice(100) do |ids|
-                metadata(ids)
+                data = metadata(ids)
+                File.write("#{Dir.pwd}/data/coin_marketcap_metadata#{idx}.json", data.to_s)
+                sleep(60)
+                idx += 1
             end
         end
 
@@ -39,5 +43,6 @@ class LoadCoinMarketcapData
 end
 
 # puts LoadCoinMarketcapData.all_cryptocurrencies
-
-puts LoadCoinMarketcapData.metadata(coin_marketcap_ids.first)
+LoadCoinMarketcapData.load_all_metadata
+# ids = Db::coins.all.pluck(:coin_marketcap_id).each_slice(100).to_a[1]
+# LoadCoinMarketcapData.metadata(ids)
