@@ -44,5 +44,10 @@ end
 
 # puts LoadCoinMarketcapData.all_cryptocurrencies
 # LoadCoinMarketcapData.load_all_metadata
-# ids = Db::coins.all.pluck(:coin_marketcap_id).each_slice(100).to_a[1]
-# LoadCoinMarketcapData.metadata(ids)
+pages_to_load = [6, 28, 61]
+pages_to_load.each do |idx|
+    ids = Db::coins.all.pluck(:coin_marketcap_id).each_slice(100).to_a[idx]
+    data = LoadCoinMarketcapData.metadata(ids)
+    File.write("#{Dir.pwd}/data/coin_marketcap_metadata#{idx}.json", data.to_s)
+    sleep(20)
+end
