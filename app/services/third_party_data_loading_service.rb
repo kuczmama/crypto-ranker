@@ -5,7 +5,8 @@ require_relative 'load_coin_marketcap_data'
 class ThirdPartyDataLoadingService    
     class << self
         def load_coin_marketcap_data_from_file
-            raw_file = File.read('../../data/coin-marketcap-data.json')
+            puts "Loading coin marketcap data from file..."
+            raw_file = File.read('data/coins/coin-marketcap-data.json')
             JSON.parse(raw_file)["data"].each do |coin|
                 Db::coins.insert({
                     coin_marketcap_id: coin['id'].to_i,
@@ -16,15 +17,27 @@ class ThirdPartyDataLoadingService
         end
 
         def load_coin_marketcap_metadata_from_file
-            raw_file = File.read('../../data/coin-marketcap-metadata.json')
-            JSON.parse(raw_file)["data"].each do |coin_marketcap_id, coin|
-                source_code = coin['urls']['source_code'].nil? ? '' : coin['urls']['source_code'].first
-                next if source_code.nil?
-                Db::coins.where(coin_marketcap_id: coin_marketcap_id).update(source_code_url: source_code)
+            puts "Loading coin marketcap metadata from file..."
+            Dir['data/metadata/*'].each do |fname|
+                puts "Loading #{fname}"
+                raw_file = File.read(fname)
+                data = JSON.parse(raw_file)["data"]
+                if data.nil?
+                    puts "No data in #{fname}"
+                    next
+                end
+                data.each do |coin_marketcap_id, coin|
+                    source_code = coin['urls']['source_code'].nil? ? '' : coin['urls']['source_code'].first
+                    puts "source_code: #{source_code}"
+                    Db::coins
+                            .where(coin_marketcap_id: coin_marketcap_id)
+                            .update(source_code_url: source_code || "")
+                end
             end
         end
 
         def load_coin_marketcap_data_from_api
+            puts "Loading coin marketcap data from API..."
             data = LoadCoinMarketcapData.load_coin_marketcap_data
             data.each do |coin|
                 Db::coins.insert({
@@ -38,5 +51,5 @@ class ThirdPartyDataLoadingService
 end
 
 
-ThirdPartyDataLoadingService.load_coin_marketcap_data_from_file
+# ThirdPartyDataLoadingService.load_coin_marketcap_data_from_file
 ThirdPartyDataLoadingService.load_coin_marketcap_metadata_from_file

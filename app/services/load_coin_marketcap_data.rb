@@ -3,7 +3,7 @@
 require 'net/http'
 require 'json'
 require 'date'
-require '../db'
+require_relative '../db'
 
 class LoadCoinMarketcapData
     class << self
@@ -43,6 +43,6 @@ class LoadCoinMarketcapData
 end
 
 # puts LoadCoinMarketcapData.all_cryptocurrencies
-LoadCoinMarketcapData.load_all_metadata
+# LoadCoinMarketcapData.load_all_metadata
 # ids = Db::coins.all.pluck(:coin_marketcap_id).each_slice(100).to_a[1]
 # LoadCoinMarketcapData.metadata(ids)
