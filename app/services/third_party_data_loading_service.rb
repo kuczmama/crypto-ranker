@@ -49,7 +49,3 @@ class ThirdPartyDataLoadingService
         end
     end
 end
-
-
-# ThirdPartyDataLoadingService.load_coin_marketcap_data_from_file
-ThirdPartyDataLoadingService.load_coin_marketcap_metadata_from_file

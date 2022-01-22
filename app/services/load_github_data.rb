@@ -15,7 +15,7 @@ class LoadGithubData
 
     def load_data
         json_data = load_json(@base_url)
-        puts "json data: #{json_data}"
+        # puts "json data: #{json_data}"
         language = json_data["language"]
         watchers_count = json_data["watchers_count"]
         open_issues_count = json_data['open_issues_count']
@@ -24,16 +24,21 @@ class LoadGithubData
         stars_count = json_data['stargazers_count']
         forks_count = json_data['forks_count']
         most_recent_commit_date = get_date_of_most_recent_commit
+        size = json_data['size']
         days_since_last_commit = (Date.today - Date.parse(most_recent_commit_date)).to_i
         return {
             language: language,
+            watchers_count: watchers_count,
             open_issues_count: open_issues_count,
             commit_count: commit_count,
             contributors_count: contributors_count,
             stars_count: stars_count,
             forks_count: forks_count,
             most_recent_commit_date: most_recent_commit_date,
-            days_since_last_commit: days_since_last_commit
+            size: size,
+            days_since_last_commit: days_since_last_commit,
+            owner: @owner,
+            repo: @repo
         }
     end
 

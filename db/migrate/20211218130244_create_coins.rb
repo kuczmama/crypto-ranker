@@ -7,6 +7,7 @@ class CreateCoins < ActiveRecord::Migration[7.0]
       t.string :slug, null: false, index: {unique: true}
       t.integer :rank, null: false, default: 0
       t.string :source_code_url, null: false, default: ''
+      t.timestamps
     end
   end
 end
