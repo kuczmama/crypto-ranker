@@ -2,6 +2,16 @@ require 'uri'
 
 class GithubHelper
     class << self
+        # Take in an owner and a repo of a github repo and return the url
+        def build_github_repo_url(owner, repo)
+            return "" if !owner || !repo
+            return "" if owner.nil? || repo.nil?
+            return "" if owner.empty? || repo.empty?
+            owner = owner.downcase
+            repo = repo.downcase
+            return "https://github.com/#{owner}/#{repo}"
+        end
+
         # Parses a given string if it is a valid githuburl
         # for example the host is "github.com" and the path "/<owner>/<repo>"
         # 
@@ -37,7 +47,7 @@ class GithubHelper
 
                 # We want to make sure that the path is in the format "/<owner>/<repo>"
                 split_path = path.split('/').filter{|x| !x.nil? && x.kind_of?(String) && !x.empty?}
-                return false if split_path.length != 2
+                return false if split_path.length < 2
                 return {owner: split_path[0], repo: split_path[1]}
             rescue
                 return false

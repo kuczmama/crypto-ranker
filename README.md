@@ -9,6 +9,7 @@ This project will attempt to rate github projects by an unbiased set of criteria
 - Number of issues - More is better, because that means there is active development
 - Number of github stars
 - Number of forks
+- NUmber of github watcher - more is better
 - Ratio of open issues to closed issues - The ratio should be smaller
 - Language used, bonus points for esoteric languages, minus points for smart contract languages like solidity.
 
@@ -77,4 +78,5 @@ ruby app/server.rb
 
 rake db:create
 rake db:migrate
+rake db:seed
 ```

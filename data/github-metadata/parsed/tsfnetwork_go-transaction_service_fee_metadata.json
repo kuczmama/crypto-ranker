@@ -1,0 +1,14 @@
+{
+  "language": "Go",
+  "watchers_count": 1,
+  "open_issues_count": 0,
+  "commit_count": 16,
+  "contributors_count": 3,
+  "stars_count": 1,
+  "forks_count": 1,
+  "size": 7951,
+  "days_since_last_commit": 54,
+  "source_code_url": "https://github.com/tsfnetwork/go-transaction_service_fee",
+  "owner": "tsfnetwork",
+  "repo": "go-transaction_service_fee"
+}

@@ -53,10 +53,7 @@ namespace :db do
       end
     end
 
-    # '_create_coins'.split('_').collect(&:capitalize).join
-    # ActiveRecord::Migrator.migrate("db/migrate/")
-    # Rake::Task["db:schema"].invoke
-    # puts "Database migrated."
+    puts "Database migrated."
   end
 
   desc "Drop the database"
@@ -113,3 +110,4 @@ end
     abort # needed stop other tasks
   end
 end
+

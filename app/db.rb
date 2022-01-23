@@ -1,4 +1,5 @@
 require_relative 'models/coin'
+require_relative 'models/github_metadata'
 require 'yaml'
 require 'active_record'
 
@@ -8,6 +9,11 @@ class Db
         def coins
             init_connection
             Coin
+        end
+
+        def github_metadata
+            init_connection
+            GithubMetadata
         end
 
         private
