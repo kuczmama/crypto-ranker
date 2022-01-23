@@ -5,7 +5,7 @@ class CreateCoins < ActiveRecord::Migration[7.0]
       t.string :name, null: false, index: {unique: true}
       t.string :symbol, null: false, index: {unique: true}
       t.string :slug, null: false, index: {unique: true}
-      t.integer :rank, null: false, default: 0
+      t.integer :rank, null: false, default: 9999999
       t.string :coin_marketcap_source_code_url, null: false, default: ''
       # The parsed github url in the format of https://github.com/owner/repo
       t.string :github_url, null: false, default: ""
