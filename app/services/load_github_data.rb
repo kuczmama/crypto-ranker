@@ -118,7 +118,7 @@ class LoadGithubData
 end
 
 # puts LoadGithubData.new('paritytech', 'polkadot').load_data_from_api
-# puts LoadGithubData.new('bitcoin', 'bitcoin').load_data_from_api
+# LoadGithubData.new('bitcoin', 'bitcoin').load_data_from_api
 # puts LoadGithubData.new('solana-labs', 'solana').load_data_from_api
 # puts LoadGithubData.new('dogecoin', 'dogecoin').load_data_from_api
 # puts LoadGithubData.new('Zebec-protocol', 'zebec-sdk').load_data_from_api

@@ -10,5 +10,5 @@ require(File.expand_path('app/services/third_party_data_loading_service.rb', Fil
 
 # # Save the github metadata to the database
 
-# ThirdPartyDataLoadingService.load_github_metadata_from_file
-ThirdPartyDataLoadingService.load_all_github_metadata(reload_data: false)
+ThirdPartyDataLoadingService.load_github_metadata_from_file
+# ThirdPartyDataLoadingService.load_all_github_metadata(reload_data: false)

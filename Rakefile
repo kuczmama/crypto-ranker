@@ -24,7 +24,7 @@ namespace :db do
       last_migration_ran_str = File.read(migration_file)
       puts "last_migration_ran_str: #{last_migration_ran_str}"
       begin
-        last_migration_ran_time = Date.parse(last_migration_ran_str).to_time.to_i
+        last_migration_ran_time = last_migration_ran_str.to_i
       rescue
         last_migration_ran_time = 0
       end
@@ -39,8 +39,9 @@ namespace :db do
         # if the migration time is after the time the last migration was ran,
         # then we run the migration, else we skip it
         migration_date_str = file.to_s.split("/")[-1].split("_")[0]
-        migration_time = Date.parse(migration_date_str).to_time.to_i
+        migration_time = migration_date_str.to_i
 
+        puts "migration_time: #{migration_time}, last_migration_ran_time: #{last_migration_ran_time}"
         if migration_time > last_migration_ran_time
           classname = fname.to_s.split('.rb')[0]
           klass = classname.split('_').collect(&:capitalize).join
