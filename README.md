@@ -87,12 +87,12 @@ GET /api/v1/coins
 
 ### Return an individual coin
 
-GET /api/v1/:slug
+GET /api/v1/coins/:id
 
 Return a singular coin
 
 ```txt
-GET /api/v1/polkadot
+GET /api/v1/coins/35ed5260-60cb-4461-bf24-18b80760009a
 
 {
         "id":"35ed5260-60cb-4461-bf24-18b80760009a",
@@ -108,6 +108,19 @@ GET /api/v1/polkadot
         "rank_score":30
     }
 ```
+
+### Return github metadata for a given coin
+
+GET /api/v1/coins/:id/github-metadata
+
+Return the github metadata for a given coin
+
+```txt
+GET /api/v1/coins/35ed5260-60cb-4461-bf24-18b80760009a/github-metadata
+
+{"id":"d2f40ccb-d131-40b9-be96-9a9813115b4f","language":"C++","watchers_count":61343,"open_issues_count":1000,"commit_count":32319,"contributors_count":362,"stars_count":61343,"forks_count":31338,"size":194761,"days_since_last_commit":2,"source_code_url":"https://github.com/bitcoin/bitcoin","owner":"bitcoin","repo":"bitcoin","created_at":"2022-01-23T01:20:29.798Z","updated_at":"2022-01-23T01:20:29.798Z","coin_id":"0c919e1d-987f-4f6e-b4b9-fad3cb48e39b"}
+```
+
 
 ## Install
 

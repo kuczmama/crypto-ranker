@@ -46,8 +46,13 @@ get "#{BASE}/coins" do
   Db::coins.order(parse_order).offset(offset).limit(limit).all.to_json || [].to_json
 end
 
-get "#{BASE}/coins/:slug" do
-  result = Db::coins.find_by(slug: params[:slug])
+get "#{BASE}/coins/:id" do
+  result = Db::coins.find_by(id: params[:id])
+  result.nil? ? [].to_json : result.to_json
+end
+
+get "#{BASE}/coins/:id/github-metadata" do
+  result = Db::github_metadata.find_by(coin_id: params[:id])
   result.nil? ? [].to_json : result.to_json
 end
 
