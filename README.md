@@ -24,6 +24,12 @@ Each criteria is ranked in terms of a percentile, where the top 20% is ranked a 
 - [x] Rank the data based on above criteria
 - [ ] Display the data on a frontend# crypto-ranker
 
+## Nice to have features
+
+- [ ] Calculate rank and rank score over time
+- [ ] Graph rank score over time
+- [ ] Rank commits based off of frequency
+ 
 ## Architecture
 
 This diagram shows what the MVP's architecture will look like once it is all completed
