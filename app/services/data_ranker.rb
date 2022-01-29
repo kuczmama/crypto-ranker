@@ -6,8 +6,15 @@ class DataRanker
             # Rank amongst all the other repos in percentages
 
             watchers_count_rank = github_metadata.watchers_count.to_f / Db::github_metadata.pluck(:watchers_count).max
+
+            ## Open issues count rank
             open_issues_count_rank = github_metadata.open_issues_count.to_f / Db::github_metadata.pluck(:open_issues_count).max
-            commit_count_rank = github_metadata.commit_count.to_f / Db::github_metadata.pluck(:commit_count).max
+
+            commit_count_rank = github_metadata.commit_count.to_f / Db::github_metadata.pluck(:commit_count).max * 0.5
+
+            ## Contributors count, multiplied by 2.0 to make it more important
+            contributors_count_rank = github_metadata.contributors_count.to_f / Db::github_metadata.pluck(:contributors_count).max * 2.0
+
             stars_count_rank = github_metadata.stars_count.to_f / Db::github_metadata.pluck(:stars_count).max
 
             # Size is only worth 10% of whateverything else is worth because it's not a great measurement
