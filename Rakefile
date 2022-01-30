@@ -8,6 +8,9 @@ namespace :db do
       'database' => 'postgres',
       'schema_search_path' => 'public'})
 
+  # Get the url for the database, or use the default
+  db_config_admin = ENV['DATABASE_URL'] || db_config_admin
+
   desc "Create the database"
   task :create do
     puts "Creating database '#{db_config['database']}'"
@@ -30,7 +33,7 @@ namespace :db do
       end
     end
 
-    ActiveRecord::Base.establish_connection(db_config)
+    ActiveRecord::Base.establish_connection(db_config_admin)
     Dir.glob(File.join('db', 'migrate', '**', '*.rb')) do |file|
       load file
       file.to_s.match(/\_([a-zA-z\_]+).rb/) do |fname|
@@ -80,7 +83,7 @@ namespace :db do
 
   desc 'Create a db/schema.rb file that is portable against any DB supported by AR'
   task :schema do
-    ActiveRecord::Base.establish_connection(db_config)
+    ActiveRecord::Base.establish_connection(db_config_admin)
     require 'active_record/schema_dumper'
     filename = "db/schema.rb"
     File.open(filename, "w:utf-8") do |file|
