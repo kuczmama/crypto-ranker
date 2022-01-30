@@ -48,6 +48,10 @@ This diagram shows what the MVP's architecture will look like once it is all com
 
 ## API
 
+The API is hosted at [https://cryptoranker.herokuapp.com/](https://cryptoranker.herokuapp.com/)
+
+To access the coins you can use the endpoint [https://cryptoranker.herokuapp.com/api/v1/coins](https://cryptoranker.herokuapp.com/api/v1/coins)
+
 The API allows for certain params
 
 *limit* - integer - max 100
