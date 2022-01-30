@@ -2,6 +2,14 @@ require "yaml"
 require "active_record"
 require 'uri'
 
+namespace :cron do
+  desc "Load all data into the database"
+  task :load_all_data do
+    require(File.expand_path('app/services/cron_script.rb', File.dirname(__FILE__)))
+  end
+
+end
+
 namespace :db do
   # Parse the databse.yml file or the DATABASE_URL environment variable
   # and return a hash with the connection information.
