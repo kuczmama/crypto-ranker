@@ -44,10 +44,3 @@ class DataRanker
         end
     end
 end
-
-count = Db::github_metadata.count
-Db::github_metadata.all.each_with_index do |github_metadata, idx|
-    puts "#{idx}/#{count}"
-    DataRanker.calculate_rank_score(github_metadata)
-end
-DataRanker.calculate_ranks
