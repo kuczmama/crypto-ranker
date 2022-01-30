@@ -22,6 +22,7 @@ Each criteria is ranked in terms of a percentile, where the top 20% is ranked a 
 - [x] Load a github url through the API
 - [x] Load all of the criteria and put the raw data into a data store
 - [x] Rank the data based on above criteria
+- [ ] Update the data at least once per day
 - [ ] Display the data on a frontend# crypto-ranker
 
 ## Nice to have features
