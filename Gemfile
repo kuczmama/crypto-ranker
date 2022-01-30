@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby "3.0.3"
+
 # API
 gem 'sinatra', '~> 2.1'
 gem 'sinatra-contrib', '~> 2.1'
