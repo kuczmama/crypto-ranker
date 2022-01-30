@@ -1,21 +1,39 @@
 require "yaml"
 require "active_record"
+require 'uri'
 
 namespace :db do
+  # Parse the databse.yml file or the DATABASE_URL environment variable
+  # and return a hash with the connection information.
+  # But the DATABASE_URL environment variable overrides the default.
+  db_config = nil
+  if !ENV['DATABASE_URL'].nil?
+    db_url = URI.parse(ENV['DATABASE_URL'])
+    db_config = {
+      adapter: "postgresql",
+      host: db_url.host,
+      port: db_url.port,
+      username: db_url.user,
+      password: db_url.password,
+      database: db_url.path[1..-1],
+      schema_search_path: 'public'
+    }
+  else
+    # Default config
+    db_config = YAML::load(File.open('config/database.yml'))
+  end
+  database_name = (db_config[:database] || db_config['database'])
+  db_config_admin = db_config.merge({'database' => 'postgres', 'schema_search_path' => 'public'})
+
+  puts "Using database configuration: #{db_config.inspect}"
+
   migration_file = File.join("db","migrate",".last_migration_ran.txt")
-  db_config       = YAML::load(File.open('config/database.yml'))
-  db_config_admin = db_config.merge({
-      'database' => 'postgres',
-      'schema_search_path' => 'public'})
 
-  # Get the url for the database, or use the default
-  db_config_admin = ENV['DATABASE_URL'] || db_config_admin
-
-  desc "Create the database"
+  desc "Create the database #{database_name}"
   task :create do
-    puts "Creating database '#{db_config['database']}'"
+    puts "Creating database '#{database_name}'..."
     ActiveRecord::Base.establish_connection(db_config_admin)
-    ActiveRecord::Base.connection.create_database(db_config["database"])
+    ActiveRecord::Base.connection.create_database(database_name)
     puts "Database created."
   end
 
@@ -33,7 +51,7 @@ namespace :db do
       end
     end
 
-    ActiveRecord::Base.establish_connection(db_config_admin)
+    ActiveRecord::Base.establish_connection(db_config)
     Dir.glob(File.join('db', 'migrate', '**', '*.rb')) do |file|
       load file
       file.to_s.match(/\_([a-zA-z\_]+).rb/) do |fname|
@@ -63,7 +81,7 @@ namespace :db do
   desc "Drop the database"
   task :drop do
     ActiveRecord::Base.establish_connection(db_config_admin)
-    ActiveRecord::Base.connection.drop_database(db_config["database"])
+    ActiveRecord::Base.connection.drop_database(database_name)
     puts "Database deleted."
     # Delete the migration file
     File.delete(migration_file) if File.exist?(migration_file)
@@ -83,7 +101,7 @@ namespace :db do
 
   desc 'Create a db/schema.rb file that is portable against any DB supported by AR'
   task :schema do
-    ActiveRecord::Base.establish_connection(db_config_admin)
+    ActiveRecord::Base.establish_connection(db_config)
     require 'active_record/schema_dumper'
     filename = "db/schema.rb"
     File.open(filename, "w:utf-8") do |file|

@@ -1,6 +1,8 @@
 require 'time'
 
-class DataProcessingService
+# This is a helper class that can run an arbitrary function
+# Every x minutes, it will run the function
+class RunnerService
     class << self
         LOG_DIR = "#{Dir.home}/data_processing_logs"
 
@@ -70,12 +72,4 @@ class DataProcessingService
             (Time.now - Time.parse(last_time)).to_i / 60
         end
     end
-end
-
-DataProcessingService.process("hello", 1) do
-    puts "Hello"
-end
-
-DataProcessingService.process("yo", 1) do
-    puts "yo"
 end

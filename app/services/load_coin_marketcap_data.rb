@@ -16,6 +16,13 @@ class LoadCoinMarketcapData
             request("/cryptocurrency/map?CMC_PRO_API_KEY=#{@@api_key}")
         end
 
+        def load_all_cryptocurrencies
+            puts "Loading all cryptocurrencies..."
+            data = all_cryptocurrencies || []
+            File.write("#{Dir.pwd}/data/coins/coin-marketcap-data.json", data.to_s)
+            JSON.parse(data)["data"]
+        end
+
         def metadata(ids)
             # https://pro-api.coinmarketcap.com/v1/cryptocurrency/info
             url = "/cryptocurrency/info?id=#{ids.join(',')}&CMC_PRO_API_KEY=#{@@api_key}"
