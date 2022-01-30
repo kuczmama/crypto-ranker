@@ -1,0 +1,8 @@
+# config/database.yml
+
+## WARNING -- this is overwritten by the environment variable DATABSE_URL
+## This is the default
+host: 'localhost'
+adapter: 'postgresql'
+encoding: utf-8
+database: 'crypto_ranker_development'

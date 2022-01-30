@@ -9,6 +9,7 @@ This project will attempt to rate github projects by an unbiased set of criteria
 - Number of issues - More is better, because that means there is active development
 - Number of github stars
 - Number of forks
+- NUmber of github watcher - more is better
 - Ratio of open issues to closed issues - The ratio should be smaller
 - Language used, bonus points for esoteric languages, minus points for smart contract languages like solidity.
 
@@ -18,11 +19,18 @@ Each criteria is ranked in terms of a percentile, where the top 20% is ranked a 
 
 ## MVP Requirements
 
-- [ ] Load a github url through the API
-- [ ] Load all of the criteria and put the raw data into a data store
-- [ ] Rank the data based on above criteria
+- [x] Load a github url through the API
+- [x] Load all of the criteria and put the raw data into a data store
+- [x] Rank the data based on above criteria
+- [ ] Update the data at least once per day
 - [ ] Display the data on a frontend# crypto-ranker
 
+## Nice to have features
+
+- [ ] Calculate rank and rank score over time
+- [ ] Graph rank score over time
+- [ ] Rank commits based off of frequency
+ 
 ## Architecture
 
 This diagram shows what the MVP's architecture will look like once it is all completed
@@ -41,22 +49,89 @@ This diagram shows what the MVP's architecture will look like once it is all com
 
 ## API
 
-### Rankings
+The API is hosted at [https://cryptoranker.herokuapp.com/](https://cryptoranker.herokuapp.com/)
+
+To access the coins you can use the endpoint [https://cryptoranker.herokuapp.com/api/v1/coins](https://cryptoranker.herokuapp.com/api/v1/coins)
+
+The API allows for certain params
+
+*limit* - integer - max 100
+
+*sort* - filter by a column name eg: rank.  To order prefix '+' or '-' to the sort param
+    +  sort ascending
+    - sort descending
+
+*page* - integer - starts at 0
+
+### Example
+
+GET /api/v1/coins?sort=+rank&limit=10&page=2
+
+This query returns all coins, sorted by rank ascending, limit 10, on the second page of coins.
+Meaning that of the 1000's of coins ranked this returns coins of rank 20-29, because we are on the 3rd page
+since pages are 0 index.
+
+### Return all coins and their rankings
+
+GET /api/v1/coins
 
 ```txt
-GET /api/v1/projects
+GET /api/v1/coins
 
 [{
-    url: "https://github.com/solana-labs/solana",
-    language: 'Rust',
-    open_issues: 717,
-    stars: 5956,
-    commits: 16788,
-    contributors: 228,
-    most_recent_commit: 2021-12-06T23:34:10Z,
-    days_since_last_commit: 0
+    [{
+        "id":"35ed5260-60cb-4461-bf24-18b80760009a",
+        "coin_marketcap_id":6636,
+        "name":"Polkadot",
+        "symbol":"DOT",
+        "slug":"polkadot-new",
+        "rank":0,
+        "coin_marketcap_source_code_url":"https://github.com/paritytech/polkadot",
+        "github_url":"https://github.com/paritytech/polkadot",
+        "created_at":"2022-01-22T21:18:24.980Z",
+        "updated_at":"2022-01-23T03:02:24.862Z",
+        "rank_score":30
+    },
+    {}...
 }]
 ```
+
+### Return an individual coin
+
+GET /api/v1/coins/:id
+
+Return a singular coin
+
+```txt
+GET /api/v1/coins/35ed5260-60cb-4461-bf24-18b80760009a
+
+{
+        "id":"35ed5260-60cb-4461-bf24-18b80760009a",
+        "coin_marketcap_id":6636,
+        "name":"Polkadot",
+        "symbol":"DOT",
+        "slug":"polkadot-new",
+        "rank":0,
+        "coin_marketcap_source_code_url":"https://github.com/paritytech/polkadot",
+        "github_url":"https://github.com/paritytech/polkadot",
+        "created_at":"2022-01-22T21:18:24.980Z",
+        "updated_at":"2022-01-23T03:02:24.862Z",
+        "rank_score":30
+    }
+```
+
+### Return github metadata for a given coin
+
+GET /api/v1/coins/:id/github-metadata
+
+Return the github metadata for a given coin
+
+```txt
+GET /api/v1/coins/35ed5260-60cb-4461-bf24-18b80760009a/github-metadata
+
+{"id":"d2f40ccb-d131-40b9-be96-9a9813115b4f","language":"C++","watchers_count":61343,"open_issues_count":1000,"commit_count":32319,"contributors_count":362,"stars_count":61343,"forks_count":31338,"size":194761,"days_since_last_commit":2,"source_code_url":"https://github.com/bitcoin/bitcoin","owner":"bitcoin","repo":"bitcoin","created_at":"2022-01-23T01:20:29.798Z","updated_at":"2022-01-23T01:20:29.798Z","coin_id":"0c919e1d-987f-4f6e-b4b9-fad3cb48e39b"}
+```
+
 
 ## Install
 
@@ -66,4 +141,8 @@ cd crypto-ranker
 
 bundle install
 ruby app/server.rb
+
+rake db:create
+rake db:migrate
+rake db:seed
 ```
