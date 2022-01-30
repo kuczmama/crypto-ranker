@@ -11,3 +11,5 @@ gem 'activerecord', '~> 7.0'
 
 # Postgres
 gem 'pg', '~> 1.3'
+
+# Web server

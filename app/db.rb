@@ -22,9 +22,11 @@ class Db
             return if @@initialized
             f_path = File.expand_path(File.join(File.dirname(__FILE__), '..','config', 'database.yml'))
             db_config       = YAML::load(File.read(f_path))
-            db_config_admin = db_config.merge({
+            db_config = db_config.merge({
                 'schema_search_path' => 'public'})
-            ActiveRecord::Base.establish_connection(db_config_admin)
+            db_config = ENV['DATABASE_URL'] || db_config
+
+            ActiveRecord::Base.establish_connection(db_config)
             @@initialized = true
         end
     end
