@@ -18,7 +18,7 @@ rerun.txt
 pickle-email-*.html
 
 ## Ignore last ran migration file
-db/migrate/.last_migration_ran
+db/migrate/.last_migration_ran.txt
 
 # Ignore all logfiles and tempfiles.
 /log/*
