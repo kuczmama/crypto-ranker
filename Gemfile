@@ -13,3 +13,4 @@ gem 'activerecord', '~> 7.0'
 gem 'pg', '~> 1.3'
 
 # Web server
+gem 'puma', '~> 5.6', '>= 5.6.1'
