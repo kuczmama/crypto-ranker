@@ -17,6 +17,9 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 
+## Ignore last ran migration file
+db/migrate/.last_migration_ran
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
