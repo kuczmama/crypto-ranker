@@ -41,17 +41,20 @@ end
 
 BASE = "/api/v1"
 get "#{BASE}/coins" do
+  headers 'Access-Control-Allow-Origin' => '*'
   limit = parse_limit
   offset = parse_offset(limit)
   Db::coins.order(parse_order).offset(offset).limit(limit).all.to_json || [].to_json
 end
 
 get "#{BASE}/coins/:id" do
+  headers 'Access-Control-Allow-Origin' => '*'
   result = Db::coins.find_by(id: params[:id])
   result.nil? ? [].to_json : result.to_json
 end
 
 get "#{BASE}/coins/:id/github-metadata" do
+  headers 'Access-Control-Allow-Origin' => '*'
   result = Db::github_metadata.find_by(coin_id: params[:id])
   result.nil? ? [].to_json : result.to_json
 end
