@@ -7,3 +7,8 @@ table {
     vertical-align: bottom;
     margin-right: 10px;
 }
+
+td {
+    // Keeps column widths equal. Change this if more columns are added.
+    width: 25%;
+}
