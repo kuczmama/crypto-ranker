@@ -17,8 +17,8 @@ export interface CoinsResponse {
 }
 
 // API endpoint for CoinsResponse
-// const COINS_API = 'https://cryptoranker.herokuapp.com/api/v1/coins';
-const COINS_API = 'http://localhost:4567/api/v1/coins';
+const COINS_API = 'https://cryptoranker.herokuapp.com/api/v1/coins';
+// const COINS_API = 'http://localhost:4567/api/v1/coins';
 
 @Injectable({
   providedIn: 'root'
