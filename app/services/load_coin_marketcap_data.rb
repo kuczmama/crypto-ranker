@@ -35,7 +35,7 @@ class LoadCoinMarketcapData
             Db::coins.all.pluck(:coin_marketcap_id).each_slice(100) do |ids|
                 data = metadata(ids)
                 File.write("#{Dir.pwd}/data/coin_marketcap_metadata#{idx}.json", data.to_s)
-                sleep(60)
+                sleep(5)
                 idx += 1
             end
         end
