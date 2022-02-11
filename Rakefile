@@ -8,6 +8,10 @@ namespace :cron do
     require(File.expand_path('app/services/cron_script.rb', File.dirname(__FILE__)))
   end
 
+  desc "Infer correct github url"
+  task :infer_correct_github_url do
+    require(File.expand_path('app/services/infer_correct_github_url.rb', File.dirname(__FILE__)))
+  end
 end
 
 namespace :db do
