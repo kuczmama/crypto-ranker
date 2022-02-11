@@ -12,6 +12,12 @@ namespace :cron do
   task :infer_correct_github_url do
     require(File.expand_path('app/services/infer_correct_github_url.rb', File.dirname(__FILE__)))
   end
+
+  desc "Calculate data ranks"
+  task :calculate_ranks do
+    require(File.expand_path('app/services/data_ranker.rb', File.dirname(__FILE__)))
+    DataRanker.calculate_ranks
+  end
 end
 
 namespace :db do

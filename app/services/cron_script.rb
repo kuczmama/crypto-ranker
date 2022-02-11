@@ -24,7 +24,7 @@ RunnerService.process("github_metadata", MINUTES_PER_DAY) do
     ThirdPartyDataLoadingService.load_all_github_metadata(reload_data: true)
 end
 
-RunnerService.process("ranking_data", MINUTES_PER_DAY) do
+RunnerService.process("calculate_ranks", MINUTES_PER_DAY) do
     # # Calculate the data ranks
     puts "Calculating data ranks"
     count = Db::github_metadata.count
