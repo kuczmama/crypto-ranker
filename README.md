@@ -1,6 +1,6 @@
 # Crytpto Github Ranker
 
-Website: [https://elated-goodall-ecce4c.netlify.app/#/home](https://elated-goodall-ecce4c.netlify.app/#/home)
+Website: [https://kuczmama.github.io/crypto-ranker/#/home](https://kuczmama.github.io/crypto-ranker/#/home)
 
 This project will attempt to rate github projects by an unbiased set of criteria.  The criteria include:
 
@@ -24,11 +24,13 @@ Each criteria is ranked in terms of a percentile, where the top 20% is ranked a 
 - [x] Load a github url through the API
 - [x] Load all of the criteria and put the raw data into a data store
 - [x] Rank the data based on above criteria
-- [ ] Update the data at least once per day
-- [ ] Display the data on a frontend# crypto-ranker
+- [x] Update the data at least once per day
+- [x] Display the data on a frontend# crypto-ranker
 
 ## Nice to have features
 
+- [x] Update the database so it's on the paid plan of heroku
+- [ ] Make it so there is only 1 github url per project
 - [ ] Calculate rank and rank score over time
 - [ ] Graph rank score over time
 - [ ] Rank commits based off of frequency

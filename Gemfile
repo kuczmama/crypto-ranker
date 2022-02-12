@@ -16,3 +16,6 @@ gem 'pg', '~> 1.3'
 
 # Web server
 gem 'puma', '~> 5.6', '>= 5.6.1'
+
+# Debugging
+gem 'byebug', '~> 11.1', '>= 11.1.3'

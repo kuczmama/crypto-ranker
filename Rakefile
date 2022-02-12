@@ -1,6 +1,64 @@
 require "yaml"
 require "active_record"
 require 'uri'
+require 'byebug'
+
+def db_config
+  # Parse the databse.yml file or the DATABASE_URL environment variable
+  # and return a hash with the connection information.
+  # But the DATABASE_URL environment variable overrides the default.
+  if !ENV['DATABASE_URL'].nil?
+    db_url = URI.parse(ENV['DATABASE_URL'])
+    {
+      adapter: "postgresql",
+      host: db_url.host,
+      port: db_url.port,
+      username: db_url.user,
+      password: db_url.password,
+      database: db_url.path[1..-1],
+      schema_search_path: 'public'
+    }
+  else
+    # Default config
+    config = YAML::load(File.open('config/database.yml'))
+    config.merge({'schema_search_path' => 'public'})
+  end
+end
+
+def get_database_name
+  db_config[:database] || db_config['database']
+end
+
+# Establish a database connection
+def establish_connection
+  ActiveRecord::Base.establish_connection(db_config)
+end
+
+# The admin connection is used to create and drop the database
+# It is when we connect to the 'postgres' database.  The reason
+# this is needed, is because we need to connect to activerecord
+# from a different database, because we can't drop/create the database we are connected to.
+def establish_admin_connection
+  ActiveRecord::Base.establish_connection(
+      db_config.merge({
+          'database' => 'postgres',
+          'schema_search_path' => 'public'
+      }))
+end
+
+# Returns the time the last database migration was run.
+# This is stored in the schema_migration table.
+def get_last_migration_ran_time
+  return 0 unless ActiveRecord::Base.connection.table_exists? 'schema_migrations'
+
+  last_migration_ran_time = 0
+  last_migration_ran_str =  ActiveRecord::SchemaMigration.last.try(:version)
+  if !last_migration_ran_str.nil? && !last_migration_ran_str.to_s.empty?
+    last_migration_ran_str.to_i
+  else
+    0
+  end
+end
 
 namespace :cron do
   desc "Load all data into the database"
@@ -21,55 +79,38 @@ namespace :cron do
 end
 
 namespace :db do
-  # Parse the databse.yml file or the DATABASE_URL environment variable
-  # and return a hash with the connection information.
-  # But the DATABASE_URL environment variable overrides the default.
-  db_config = nil
-  if !ENV['DATABASE_URL'].nil?
-    db_url = URI.parse(ENV['DATABASE_URL'])
-    db_config = {
-      adapter: "postgresql",
-      host: db_url.host,
-      port: db_url.port,
-      username: db_url.user,
-      password: db_url.password,
-      database: db_url.path[1..-1],
-      schema_search_path: 'public'
-    }
-  else
-    # Default config
-    db_config = YAML::load(File.open('config/database.yml'))
-  end
-  database_name = (db_config[:database] || db_config['database'])
-  db_config_admin = db_config.merge({'database' => 'postgres', 'schema_search_path' => 'public'})
-
-  puts "Using database configuration: #{db_config.inspect}"
-
-  migration_file = File.join("db","migrate",".last_migration_ran.txt")
-
-  desc "Create the database #{database_name}"
   task :create do
-    puts "Creating database '#{database_name}'..."
-    ActiveRecord::Base.establish_connection(db_config_admin)
+    establish_admin_connection
+
+    database_name = get_database_name
+    raise "Database name cannot be nil" if database_name.nil?
+    puts "Creating database '#{database_name}'"
+
     ActiveRecord::Base.connection.create_database(database_name)
+
+    # We need to establish a connection with the new database
+    establish_connection
+
+    # This creates the schema_migrations table, it keeps track of when the last
+    # Migration was ran.  This is a hidden table that isn't in the schema.rb
+    # and it is also not in the migrations directory.
+    #
+    # It has a single version column that is used to keep track of the last
+    # migration when it was ran, and it is created by default when we create
+    
+    ActiveRecord::Base.connection.create_table :schema_migrations, id: false do |t|
+      t.string :version, null: false
+    end
+    ActiveRecord::Base.connection.add_index :schema_migrations, :version, unique: true
     puts "Database created."
   end
 
   desc "Migrate the database"
   task :migrate do
-    # Default to 0, because it's never been run before
-    last_migration_ran_time = 0
-    if File.exist?(migration_file)
-      last_migration_ran_str = File.read(migration_file)
-      puts "last_migration_ran_str: #{last_migration_ran_str}"
-      begin
-        last_migration_ran_time = last_migration_ran_str.to_i
-      rescue
-        last_migration_ran_time = 0
-      end
-    end
+    puts "migrating database"
+    establish_connection
 
-    ActiveRecord::Base.establish_connection(db_config)
+    # Default to 0, because it's never been run before
     Dir.glob(File.join('db', 'migrate', '**', '*.rb')) do |file|
       load file
       file.to_s.match(/\_([a-zA-z\_]+).rb/) do |fname|
@@ -79,14 +120,17 @@ namespace :db do
         # then we run the migration, else we skip it
         migration_date_str = file.to_s.split("/")[-1].split("_")[0]
         migration_time = migration_date_str.to_i
+        last_migration_ran_time = get_last_migration_ran_time
 
         puts "migration_time: #{migration_time}, last_migration_ran_time: #{last_migration_ran_time}"
         if migration_time > last_migration_ran_time
           classname = fname.to_s.split('.rb')[0]
           klass = classname.split('_').collect(&:capitalize).join
 
+          puts "Running migration: #{klass}"
+
           Object.const_get(klass).migrate(:up)
-          File.open(migration_file, 'w') { |f| f.write(migration_date_str) }
+          ActiveRecord::SchemaMigration.insert({version: migration_time})
         else
           puts "Skipping #{fname} because it's already been ran #{migration_date_str}"
         end
@@ -98,12 +142,17 @@ namespace :db do
 
   desc "Drop the database"
   task :drop do
-    ActiveRecord::Base.establish_connection(db_config_admin)
+    puts "Dropping database"
+    # We need to establish a connection to a different database ie the postgres database
+    # because we can't drop the database we are connected to, we can only drop a separate db.
+    establish_admin_connection
+
+    database_name = get_database_name
+    raise "Database name cannot be nil" if database_name.nil?
+
+    # Drop the database
     ActiveRecord::Base.connection.drop_database(database_name)
     puts "Database deleted."
-    # Delete the migration file
-    File.delete(migration_file) if File.exist?(migration_file)
-    puts "migration file deleted"
   end
 
   desc "Seed the database"
@@ -119,7 +168,7 @@ namespace :db do
 
   desc 'Create a db/schema.rb file that is portable against any DB supported by AR'
   task :schema do
-    ActiveRecord::Base.establish_connection(db_config)
+    establish_admin_connection
     require 'active_record/schema_dumper'
     filename = "db/schema.rb"
     File.open(filename, "w:utf-8") do |file|
