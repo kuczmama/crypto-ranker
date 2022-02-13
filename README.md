@@ -31,16 +31,15 @@ Each criteria is ranked in terms of a percentile, where the top 20% is ranked a 
 
 - [x] Update the database so it's on the paid plan of heroku
 - [x] Make it so there is only 1 github url per project
-- [ ] Store runner service in database
+- [x] Store runner service in database
 - [ ] Calculate rank and rank score over time
 - [ ] Graph rank score over time
 - [ ] Rank commits based off of frequency
- 
-## Architecture
+ ## Architecture
 
 This diagram shows what the MVP's architecture will look like once it is all completed
 
-![Server Architecture](diagrams/proposed-architecture.png)
+![Server Architecture](diagrams/crypto-ranker-architecture.png)
 
 ### Components
 
