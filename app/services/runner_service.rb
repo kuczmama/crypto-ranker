@@ -1,5 +1,5 @@
 require 'time'
-require_relative '../../db'
+require_relative '../db'
 
 # This is a helper class that can run an arbitrary function
 # Every x minutes, it will run the function
