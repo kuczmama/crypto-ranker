@@ -21,6 +21,12 @@ class RunnerService
         # @param [Integer] t - interval in minutes to run the function
         # @param [Block] function
         def process(function_name, time_interval, &function)
+            raise "IllegalArgument function_name is nil" if function_name.nil?
+            raise "IllegalArgument time_interval is nil" if time_interval.nil?
+            raise "Time interval must be a number" unless time_interval.is_a?(Numeric)
+            raise "time_interval must be greater than 0" if time_interval <= 0
+            raise "IllegalArgument function is not a block" unless function.is_a? Proc
+
             # Check if the log path exists, if not create it
             # Get the last time the function was run
             num_minutes_elapsed = minutes_elapsed(function_name)
@@ -34,7 +40,7 @@ class RunnerService
                     {function_name: function_name}
                 ).update!({last_run_time: Time.now})
             else
-                puts "Function was not run, only #{num_minutes_elapsed} minutes have elapsed"
+                puts "function '#{function_name}' was not run, only #{num_minutes_elapsed} minutes have elapsed"
                 # Do nothing
             end
         end
