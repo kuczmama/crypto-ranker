@@ -10,9 +10,9 @@ class CreateGithubMetadata < ActiveRecord::Migration[7.0]
       t.integer :forks_count, null: false, default: 0
       t.integer :size, null: false, default: 0
       t.integer :days_since_last_commit, null: false, default: 0
-      t.string :source_code_url, null: false
-      t.string :owner, null: false, default: ""
-      t.string :repo, null: false, default: ""
+      t.string :source_code_url, null: false, unique: true
+      t.string :owner, null: false, unique: true
+      t.string :repo, null: false, unique: true
       t.timestamps
     end
     add_reference :github_metadata, :coin, null: false, foreign_key: true, type: :uuid
