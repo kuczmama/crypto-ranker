@@ -39,7 +39,7 @@ Each criteria is ranked in terms of a percentile, where the top 20% is ranked a 
 
 This diagram shows what the MVP's architecture will look like once it is all completed
 
-![Server Architecture](diagrams/crypto-ranker-architecture.png)
+![Server Architecture](diagrams/crypto-ranker-architecture.jpeg)
 
 ### Components
 
