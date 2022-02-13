@@ -3,6 +3,7 @@ require_relative '../db'
 require_relative '../helpers/github_helper'
 require_relative 'load_coin_marketcap_data'
 require_relative 'load_github_data'
+require 'byebug'
 
 # This is a kludgy file to load all of the data from a third party source, and insert the data
 # into the database.
@@ -88,6 +89,7 @@ class ThirdPartyDataLoadingService
                 owner = parsed_url[:owner]
                 repo = parsed_url[:repo]
                 github_url = GithubHelper.build_github_repo_url(owner, repo)
+                puts "github_url: #{github_url}"
 
                 # Check if the url already exists... if it does, we don't want to reload it
                 # If the reload data is false, however if reload_data is true, then we want to
@@ -97,14 +99,18 @@ class ThirdPartyDataLoadingService
                     puts "The metadata for #{github_url} already exists, skipping..."
                     next
                 end
-                puts "Loading github data for #{owner}/#{repo} because it does not already exist"
+                puts "Updating github data for #{owner}/#{repo}"
 
                 github_metadata = LoadGithubData.new(owner, repo).load_data_from_api
                 puts "github_metadata: #{github_metadata}"
+
                 coin = Db::coins.find_by(github_url: github_url)
                 github_metadata['coin_id'] = coin.id
-                puts "Inserting #{github_metadata}"
-                Db::github_metadata.insert(github_metadata)
+                puts "Insert or update #{github_metadata}"
+
+                Db::github_metadata.find_or_initialize_by(
+                    {source_code_url: github_url}
+                ).update!(github_metadata)
             end
         end
 
@@ -127,3 +133,5 @@ class ThirdPartyDataLoadingService
         end
     end
 end
+
+ThirdPartyDataLoadingService.load_all_github_metadata
