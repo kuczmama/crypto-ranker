@@ -1,5 +1,6 @@
 require_relative 'models/coin'
 require_relative 'models/github_metadata'
+require_relative 'models/runner_log'
 require 'yaml'
 require 'active_record'
 
@@ -14,6 +15,12 @@ class Db
         def github_metadata
             init_connection
             GithubMetadata
+        end
+
+        
+        def runner_logs
+            init_connection
+            RunnerLog
         end
 
         private
