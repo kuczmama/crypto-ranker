@@ -32,6 +32,8 @@ Each criteria is ranked in terms of a percentile, where the top 20% is ranked a 
 - [x] Update the database so it's on the paid plan of heroku
 - [x] Make it so there is only 1 github url per project
 - [x] Store runner service in database
+- [ ] Add tool tips to explain ranking columns
+- [ ] Show image for each cryptocurrency
 - [ ] Calculate rank and rank score over time
 - [ ] Graph rank score over time
 - [ ] Rank commits based off of frequency
