@@ -16,7 +16,8 @@ class DataRanker
                 calculate_rank_score(github_metadata)
             end
 
-            scores = Db::coins.pluck(:rank_score).sort.reverse
+            # Select the scores, while filtering out NaN's and floats that aren't numbers
+            scores = Db::coins.pluck(:rank_score).select{|score| !score.nan? && score.is_a?(Float)}.sort.reverse
             Db::coins.all.each do |coin|
                 coin.update!(rank: scores.index(coin.rank_score) + 1)
                 puts "Updating #{coin.slug} to rank: #{coin.rank}"
