@@ -133,5 +133,3 @@ class ThirdPartyDataLoadingService
         end
     end
 end
-
-ThirdPartyDataLoadingService.load_all_github_metadata
