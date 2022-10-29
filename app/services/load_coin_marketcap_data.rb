@@ -13,6 +13,8 @@ class LoadCoinMarketcapData
         # /v1/cryptocurrency/map - Load list of cryptocurrencies
         # https://coinmarketcap.com/api/documentation/v1/#operation/getV1CryptocurrencyMap
         def all_cryptocurrencies
+            has_cmc_api_key?
+
             request("/cryptocurrency/map?CMC_PRO_API_KEY=#{@@api_key}")
         end
 
@@ -24,6 +26,8 @@ class LoadCoinMarketcapData
         end
 
         def metadata(ids)
+            has_cmc_api_key?
+
             # https://pro-api.coinmarketcap.com/v1/cryptocurrency/info
             url = "/cryptocurrency/info?id=#{ids.join(',')}&CMC_PRO_API_KEY=#{@@api_key}"
             request(url)
@@ -41,6 +45,14 @@ class LoadCoinMarketcapData
         end
 
         private
+
+        def has_cmc_api_key?
+            if @@api_key.nil?
+                raise "Must set Coin market cap API environment variable: CMC_PRO_API_KEY https://pro.coinmarketcap.com/api/v1#"
+            end
+            !@@api_key.nil?
+        end
+
         def request(url)
             uri = URI.parse("#{@@base_url}#{url}")
             puts uri
