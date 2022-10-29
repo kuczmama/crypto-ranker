@@ -208,3 +208,11 @@ rake db:seed
 # Run server
 ruby app/server.rb
 ```
+
+### Heroku Administration
+
+Update all cryptocurrencies
+
+```bash
+heroku run rake cron:load_all_data -a cryptoranker
+```
