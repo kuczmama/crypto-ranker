@@ -1,5 +1,23 @@
 # Crytpto Github Ranker
 
+- [Crytpto Github Ranker](#crytpto-github-ranker)
+  * [How the score is calculated](#how-the-score-is-calculated)
+  * [MVP Requirements](#mvp-requirements)
+  * [Nice to have features](#nice-to-have-features)
+  * [Architecture](#architecture)
+    + [Components](#components)
+  * [API](#api)
+    + [Example](#example)
+    + [Return all coins and their rankings](#return-all-coins-and-their-rankings)
+    + [Return an individual coin](#return-an-individual-coin)
+    + [Return github metadata for a given coin](#return-github-metadata-for-a-given-coin)
+  * [Install](#install)
+    + [M1 or M2 Mac Prerequisites](#m1-or-m2-mac-prerequisites)
+    + [Setup CryptoRanker](#setup-cryptoranker)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+
 Website: [https://kuczmama.github.io/crypto-ranker/#/home](https://kuczmama.github.io/crypto-ranker/#/home)
 
 This project will attempt to rate github projects by an unbiased set of criteria.  The criteria include:
@@ -141,7 +159,7 @@ GET /api/v1/coins/35ed5260-60cb-4461-bf24-18b80760009a/github-metadata
 
 ## Install
 
-### M1/M2 Mac Prerequisites
+### M1 or M2 Mac Prerequisites
 
 ```bash
 
