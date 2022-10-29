@@ -187,7 +187,7 @@ brew services restart postgresql
 ```bash
 
 # Clone repo
-git clone https://github.com/kuczmama/crypto-ranker
+git clone git@github.com:kuczmama/crypto-ranker.git
 cd crypto-ranker
 
 bundle install
