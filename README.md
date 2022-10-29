@@ -240,3 +240,13 @@ Db::coins.count
 # View runner logs
 Db::runner_logs.all
 ```
+
+Deploy to heroku
+
+```bash
+# Add heroku remote
+git remote add heroku https://git.heroku.com/cryptoranker.git
+
+# Deploy
+git push heroku main
+```
