@@ -44,6 +44,7 @@ GEM
       concurrent-ruby (~> 1.0)
 
 PLATFORMS
+  arm64-darwin-21
   x86_64-darwin-19
   x86_64-linux
 
@@ -57,7 +58,7 @@ DEPENDENCIES
   sinatra-contrib (~> 2.1)
 
 RUBY VERSION
-   ruby 3.0.3p157
+   ruby 3.1.2p20
 
 BUNDLED WITH
-   2.2.32
+   2.3.7
