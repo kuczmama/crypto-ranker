@@ -1,5 +1,10 @@
 # Crytpto Github Ranker
 
+Website: [https://kuczmama.github.io/crypto-ranker/#/home](https://kuczmama.github.io/crypto-ranker/#/home)
+
+This project will attempt to rate github projects by an unbiased set of criteria.  The criteria include:
+
+
 - [Crytpto Github Ranker](#crytpto-github-ranker)
   * [How the score is calculated](#how-the-score-is-calculated)
   * [MVP Requirements](#mvp-requirements)
@@ -15,12 +20,9 @@
     + [M1 or M2 Mac Prerequisites](#m1-or-m2-mac-prerequisites)
     + [Setup CryptoRanker](#setup-cryptoranker)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+## How the score is calculated
 
-
-Website: [https://kuczmama.github.io/crypto-ranker/#/home](https://kuczmama.github.io/crypto-ranker/#/home)
-
-This project will attempt to rate github projects by an unbiased set of criteria.  The criteria include:
+Each criteria is ranked in terms of a percentile, where the top 20% is ranked a 5, 80th percentile is 4, and bottom 20% is ranked a 1.  Each is rated by its recency.
 
 - Number of commits - more is better
 - Number of contributors - more is better
@@ -33,9 +35,6 @@ This project will attempt to rate github projects by an unbiased set of criteria
 - Ratio of open issues to closed issues - The ratio should be smaller
 - Language used, bonus points for esoteric languages, minus points for smart contract languages like solidity.
 
-## How the score is calculated
-
-Each criteria is ranked in terms of a percentile, where the top 20% is ranked a 5, 80th percentile is 4, and bottom 20% is ranked a 1.  Each is rated by its recency.
 
 ## MVP Requirements
 
