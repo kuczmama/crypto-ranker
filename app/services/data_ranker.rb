@@ -20,7 +20,9 @@ class DataRanker
             scores = Db::coins.pluck(:rank_score).select{|score| !score.nan? && score.is_a?(Float)}.sort.reverse
             Db::coins.all.each do |coin|
                 rank_score = scores.index(coin.rank_score)
-                if rank_score.nan? || !rank_score.is_a?(Int)
+
+                # Check to make sure the score is valid
+                if rank_score.nil? || !rank_score.is_a?(Int)
                     puts "Skipping #{coin} because it's rank_score: #{rank_score} is not valid"
                     next
                 end
