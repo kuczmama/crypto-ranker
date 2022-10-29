@@ -46,7 +46,7 @@ class DataRanker
             days_since_last_commit = github_metadata.days_since_last_commit.to_f
             days_since_last_commit_rank = (days_since_last_commit <= 0 ? 1 : (1 / days_since_last_commit)) * 0.5
 
-            puts "watchers_count_rank: #{watchers_count_rank}\nopen_issues_count_rank: #{open_issues_count_rank}\ncommit_count_rank: #{commit_count_rank}\nstars_count_rank: #{stars_count_rank}\nsize_count_rank: #{size_count_rank}\ndays_since_last_commit_rank: #{days_since_last_commit_rank}"
+            puts "watchers_count_rank: #{watchers_count_rank}\nopen_issues_count_rank: #{open_issues_count_rank}\ncommit_count_rank: #{commit_count_rank}\nstars_count_rank: #{stars_count_rank}\ndays_since_last_commit_rank: #{days_since_last_commit_rank}"
 
             # Calculate the rank of each of the numbers above.. lower is better
             rank = (
