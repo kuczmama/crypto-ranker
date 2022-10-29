@@ -141,14 +141,42 @@ GET /api/v1/coins/35ed5260-60cb-4461-bf24-18b80760009a/github-metadata
 
 ## Install
 
-```txt
+### M1/M2 Mac Prerequisites
+
+```bash
+
+# Install ruby
+brew install rbenv ruby-build
+
+# On m1/m2 macs install rosetta
+brew tap heroku/brew && brew install heroku
+
+# Install heroku cli -- https://devcenter.heroku.com/articles/heroku-cli
+brew tap heroku/brew && brew install heroku
+
+# Install libpq
+brew install libpq
+
+# Install postgres
+brew install postgres
+
+# Start postgresql
+brew services restart postgresql
+```
+
+```bash
+
+# Clone repo
 git clone https://github.com/kuczmama/crypto-ranker
 cd crypto-ranker
 
 bundle install
-ruby app/server.rb
 
+# Setup database
 rake db:create
 rake db:migrate
 rake db:seed
+
+# Run server
+ruby app/server.rb
 ```
