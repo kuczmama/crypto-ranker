@@ -19,7 +19,12 @@ class DataRanker
             # Select the scores, while filtering out NaN's and floats that aren't numbers
             scores = Db::coins.pluck(:rank_score).select{|score| !score.nan? && score.is_a?(Float)}.sort.reverse
             Db::coins.all.each do |coin|
-                coin.update!(rank: scores.index(coin.rank_score) + 1)
+                rank_score = scores.index(coin.rank_score)
+                if rank_score.nan? || !rank_score.is_a?(Int)
+                    puts "Skipping #{coin} because it's rank_score: #{rank_score} is not valid"
+                    next
+                end
+                coin.update!(rank: rank_score + 1)
                 puts "Updating #{coin.slug} to rank: #{coin.rank}"
             end
         end
