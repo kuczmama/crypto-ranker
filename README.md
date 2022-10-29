@@ -158,6 +158,14 @@ GET /api/v1/coins/35ed5260-60cb-4461-bf24-18b80760009a/github-metadata
 
 ## Install
 
+If you want to run this locally, you'll need to do the following:
+
+### Set Environment Variables
+
+#### Set Coin marketCap Pro API
+
+The environment variable `CMC_PRO_API_KEY`, needs to be set in the environment.  This can be gotten via coinmarketcap: https://pro.coinmarketcap.com/
+
 ### M1 or M2 Mac Prerequisites
 
 ```bash
