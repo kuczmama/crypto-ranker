@@ -27,11 +27,6 @@ end
 RunnerService.process("calculate_ranks", MINUTES_PER_DAY) do
     # # Calculate the data ranks
     puts "Calculating data ranks"
-    count = Db::github_metadata.count
-    Db::github_metadata.all.each_with_index do |github_metadata, idx|
-        puts "#{idx}/#{count}"
-        DataRanker.calculate_rank_score(github_metadata)
-    end
     DataRanker.calculate_ranks
 end
 
