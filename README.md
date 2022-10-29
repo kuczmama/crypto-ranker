@@ -164,6 +164,9 @@ brew install postgres
 brew services restart postgresql
 ```
 
+
+### Setup CryptoRanker
+
 ```bash
 
 # Clone repo
