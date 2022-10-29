@@ -216,3 +216,21 @@ Update all cryptocurrencies
 ```bash
 heroku run rake cron:load_all_data -a cryptoranker
 ```
+
+Query Database
+
+
+```bash
+heroku run irb -a cryptoranker
+require_relative 'app/db.rb'
+
+# Get last update time for a coin
+
+Db::coins.order(updated_at: :desc).first
+
+# Get total number of coins
+Db::coins.count
+
+# View runner logs
+Db::runner_logs.all
+```
