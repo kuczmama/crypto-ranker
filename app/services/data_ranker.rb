@@ -22,12 +22,13 @@ class DataRanker
                 rank_score = scores.index(coin.rank_score)
 
                 # Check to make sure the score is valid
-                if rank_score.nil? || !rank_score.is_a?(Int)
+                if !rank_score.nil? && rank_score.is_a?(Integer)
+                    coin.update!(rank: rank_score + 1)
+                    puts "Updating #{coin.slug} to rank: #{coin.rank}"
+                else
                     puts "Skipping #{coin} because it's rank_score: #{rank_score} is not valid"
-                    next
                 end
-                coin.update!(rank: rank_score + 1)
-                puts "Updating #{coin.slug} to rank: #{coin.rank}"
+  
             end
         end
 
