@@ -17,8 +17,14 @@ This project will attempt to rate github projects by an unbiased set of criteria
     + [Return an individual coin](#return-an-individual-coin)
     + [Return github metadata for a given coin](#return-github-metadata-for-a-given-coin)
   * [Install](#install)
+    + [Set Environment Variables](#set-environment-variables)
+      - [Set Coin marketCap Pro API](#set-coin-marketcap-pro-api)
     + [M1 or M2 Mac Prerequisites](#m1-or-m2-mac-prerequisites)
     + [Setup CryptoRanker](#setup-cryptoranker)
+    + [Heroku Administration](#heroku-administration)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 
 ## How the score is calculated
 
